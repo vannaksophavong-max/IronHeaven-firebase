@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { resolveImage } from "../utils/images";
 
 export default function BikeCard({ bike }) {
   const hasImageClass = Boolean(bike.image);
@@ -14,7 +15,7 @@ export default function BikeCard({ bike }) {
         style={
           !hasImageClass && bike.heroImage
             ? {
-              backgroundImage: `url("${bike.heroImage}")`,
+              backgroundImage: `url("${resolveImage(bike.heroImage)}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }

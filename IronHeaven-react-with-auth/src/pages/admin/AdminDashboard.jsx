@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllBikes, deleteBike } from "../../firebase/bikes";
 import AdminNav from "../../components/AdminNav";
+import { resolveImage } from "../../utils/images";
 
 export default function AdminDashboard() {
   const [bikes, setBikes] = useState([]);
@@ -106,7 +107,7 @@ export default function AdminDashboard() {
                       {bike.heroImage ? (
                         <img
                           className="admin-thumb"
-                          src={bike.heroImage}
+                          src={resolveImage(bike.heroImage)}
                           alt={bike.name}
                         />
                       ) : (

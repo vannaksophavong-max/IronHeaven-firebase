@@ -4,6 +4,7 @@ import BackBar from "../components/BackBar";
 import Footer from "../components/Footer";
 import BikeCard from "../components/BikeCard";
 import { getBikeById, getAllBikes } from "../firebase/bikes";
+import { resolveImage } from "../utils/images";
 
 export default function BikeDetail() {
   const { id } = useParams();
@@ -57,7 +58,7 @@ export default function BikeDetail() {
       <section
         className="detail-hero"
         style={{
-          background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("${bike.heroImage}")`,
+          background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("${resolveImage(bike.heroImage)}")`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

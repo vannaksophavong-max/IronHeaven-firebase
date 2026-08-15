@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getBikeById, createBike, updateBike } from "../../firebase/bikes";
 import { uploadBikePhoto } from "../../firebase/storage";
 import AdminNav from "../../components/AdminNav";
+import { resolveImage } from "../../utils/images";
 
 const emptyBike = {
   id: "",
@@ -274,7 +275,7 @@ export default function BikeForm() {
             {(photoPreview || form.heroImage) && (
               <img
                 className="admin-photo-preview span-2"
-                src={photoPreview || form.heroImage}
+                src={photoPreview || resolveImage(form.heroImage)}
                 alt="Bike preview"
               />
             )}
