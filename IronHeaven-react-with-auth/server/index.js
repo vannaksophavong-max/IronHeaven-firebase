@@ -17,9 +17,17 @@ import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "fs";
 
-const serviceAccount = JSON.parse(
-  readFileSync(new URL("../scripts/serviceAccountKey.json", import.meta.url))
-);
+// Load the service account from FIREBASE_SERVICE_ACCOUNT (hosted deploys)
+// or from scripts/serviceAccountKey.json (local development).
+let serviceAccount;
+const envJson = process.env.FIREBASE_SERVICE_ACCOUNT;
+if (envJson) {
+  serviceAccount = JSON.parse(envJson);
+} else {
+  serviceAccount = JSON.parse(
+    readFileSync(new URL("../scripts/serviceAccountKey.json", import.meta.url))
+  );
+}
 
 initializeApp({ credential: cert(serviceAccount) });
 const adminAuth = getAuth();

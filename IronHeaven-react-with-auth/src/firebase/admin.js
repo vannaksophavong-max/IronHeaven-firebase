@@ -1,6 +1,6 @@
 import { auth } from "./config";
 
-const API_BASE = "/api/admin";
+const API_BASE = import.meta.env.VITE_API_BASE || "/api/admin";
 
 // Calls the local admin API (server/index.js). The server re-checks the
 // caller's ID token and admin role, so these are safe to expose to the UI.

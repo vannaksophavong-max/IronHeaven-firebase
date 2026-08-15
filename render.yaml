@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ironheaven-admin-api
+    runtime: node
+    plan: free
+    rootDir: IronHeaven-react-with-auth
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
