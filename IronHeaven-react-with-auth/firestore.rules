@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Anyone can read bikes (public catalog). Only admins can write.
+    match /bikes/{bikeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Users can read/update their own profile, but NOT their own role field
+    // (otherwise anyone could self-promote to admin). Only an existing
+    // admin can change roles.
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if isSignedIn() && request.auth.uid == userId &&
+        request.resource.data.role == 'customer';
+      allow update: if isSignedIn() && request.auth.uid == userId &&
+        request.resource.data.role == resource.data.role;
+      allow write: if isAdmin();
+    }
+  }
+}
